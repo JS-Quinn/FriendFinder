@@ -3,6 +3,9 @@
 // ==============================================================================
 const express = require("express");
 const bodyParser = require("body-parser");
+const path = require("path");
+
+
 
 // ==============================================================================
 // EXPRESS CONFIGURATION
@@ -16,19 +19,23 @@ const PORT = process.env.PORT || 8080;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use(express.static(path.join(__dirname, './app/public')))
+
 // ================================================================================
 // ROUTER
 // Points our server to a series of route files.
 // ================================================================================
 
-require("./routing/apiRoutes")(app);
-require("./routing/htmlRoutes")(app);
+require("./app/routing/apiRoutes")(app);
+require("./app/routing/htmlRoutes")(app);
 
 // =============================================================================
 // LISTENER
 // The below code starts the server
 // =============================================================================
 
+
 app.listen(PORT, () => {
-  console.log(`Welcome to Friend Finder. Now looking for friends on port ${port}!`);
+  console.log(`Welcome to Friend Finder. Now looking for friends on port ${PORT}!`);
 });
+

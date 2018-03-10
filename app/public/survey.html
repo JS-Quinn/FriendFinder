@@ -11,6 +11,10 @@
 
   <div class="container">
 
+    <br>
+    <br>
+    <br>
+
     <div class="jumbotron">
         <h1 class="text-center"><span class="glyphicon glyphicon-user"></span> Friend Finder</h1>
         <hr>
@@ -29,6 +33,15 @@
             <h4 class="panel-title">Friend Survey</h4>
           </div>
           <div class="panel-body">
+
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name">
+            </div>
+            <div class="form-group">
+                <label for="image">Image URL:</label>
+                <input type="text" class="form-control" id="image">
+            </div>
 
             <div class="form-group">
                 <label for="sel1">Question 1:</label>
@@ -131,7 +144,7 @@
                 </select>
             </div>
             <div class="text-center">
-                    <a href="/"><button type="button" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-send"></span> Submit </button></a>
+                    <a><button type="button" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-send"></span> Submit </button></a>
                   </div>                            
           </div>
         </div>
@@ -141,7 +154,7 @@
 
     <footer class="footer">
       <div class="container">
-        <p><a href="/api/friends">API Friends Link</a> | <a href="https://github.com/afhaque/HotRestaurant">GitHub Repo</a></p>
+        <p><a href="/api/friends">API Friends Link</a> | <a href="https://github.com/JS-Quinn/FriendFinder">GitHub Repo</a></p>
       </div>
 
     </footer>
@@ -161,39 +174,27 @@
       event.preventDefault();
 
       // Here we grab the form elements
-      var newReservation = {
-        customerName: $("#reserve-name").val().trim(),
-        phoneNumber: $("#reserve-phone").val().trim(),
-        customerEmail: $("#reserve-email").val().trim(),
-        customerID: $("#reserve-unique-id").val().trim()
+      var newFriend = {
+        friendName: $("#name").val().trim(),
+        friendImage: $("#image").val().trim(),
+        friendScores: $("#scores").val().trim(),
       };
 
-      console.log(newReservation);
+      console.log(newFriend);
 
       // This line is the magic. It"s very similar to the standard ajax function we used.
       // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
       // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
       // depending on if a tables is available or not.
 
-      $.post("/api/tables", newReservation,
+      $.post("/api/friends", newFriend,
         function(data) {
 
-          // If a table is available... tell user they are booked.
-          if (data) {
             alert("Yay! You are officially booked!");
-          }
 
-          // If a table is available... tell user they on the waiting list.
-          else {
-            alert("Sorry you are on the wait list");
-          }
-
-          // Clear the form when submitting
-          $("#reserve-name").val("");
-          $("#reserve-phone").val("");
-          $("#reserve-email").val("");
-          $("#reserve-unique-id").val("");
-
+            // Clear the form after submitting
+            $("#name").val("");
+            $("#image").val("");
         });
 
     });
